@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HyperBot Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <nav class="bg-gray-800 p-4 flex justify-between items-center">
+        <img src="/static/logo.png" alt="HyperBot Logo" class="h-12">
+        <h1 class="text-2xl font-bold">HyperBot Dashboard</h1>
+    </nav>
+    
+    <main class="container mx-auto mt-8 p-6">
+        <!-- Blockchain Status -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold">Blockchain Status</h2>
+            <div id="status" class="mt-2">Loading...</div>
+        </section>
+
+        <!-- User Portfolio -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold">User Portfolio</h2>
+            <div id="portfolio" class="mt-2">Loading...</div>
+        </section>
+
+        <!-- Liquidity Analytics -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold">Liquidity Analytics</h2>
+            <div id="liquidity" class="mt-2">Loading...</div>
+        </section>
+
+        <!-- Transactions -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold">Transactions</h2>
+            <div id="transactions" class="mt-2">Loading...</div>
+        </section>
+
+        <!-- StockCoin Exchange -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold">StockCoin Exchange</h2>
+            <div id="stockcoin" class="mt-2">Loading...</div>
+        </section>
+
+        <!-- Governance -->
+        <section>
+            <h2 class="text-xl font-semibold">Governance</h2>
+            <div id="governance" class="mt-2">Loading...</div>
+        </section>
+    </main>
+
+    <script>
+        async function fetchData(endpoint, elementId) {
+            try {
+                const response = await fetch(endpoint);
+                const data = await response.json();
+                document.getElementById(elementId).innerText = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById(elementId).innerText = "Failed to load data";
+            }
+        }
+
+        fetchData("/api/status", "status");
+        fetchData("/api/user-portfolio/0xYourAddress", "portfolio");
+        fetchData("/api/liquidity", "liquidity");
+        fetchData("/api/transactions", "transactions");
+        fetchData("/api/stockcoin", "stockcoin");
+        fetchData("/api/governance/proposals", "governance");
+    </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+flask
+flask_cors
+flask_socketio
+web3
+pyjwt
+requests
+python-dotenv
+gunicorn
+eventlet
+gevent
