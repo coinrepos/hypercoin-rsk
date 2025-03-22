@@ -13,11 +13,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Print working directory
+      - name: Print current directory
         run: pwd
 
-      - name: List files in working directory
+      - name: List files in the current directory
         run: ls -la
+
+      - name: List files in the parent directory
+        run: ls -la ..
+
+      - name: List files in the grandparent directory
+        run: ls -la ../..
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
