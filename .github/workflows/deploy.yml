@@ -13,6 +13,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Print working directory
+        run: pwd
+
+      - name: List files in working directory
+        run: ls -la
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -20,16 +26,15 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: .
 
       - name: Compile contracts
         run: npx hardhat compile
-        working-directory: .
 
       - name: Deploy to RSK
         env:
           RSK_PRIVATE_KEY: ${{ secrets.RSK_PRIVATE_KEY }}
           RSK_RPC_URL: ${{ secrets.RSK_RPC_URL }}
+<<<<<<< HEAD
         run: npx hardhat run scripts/deploy.js --network rsk
         working-directory: .
        
