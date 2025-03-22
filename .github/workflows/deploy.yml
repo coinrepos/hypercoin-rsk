@@ -1,0 +1,55 @@
+name: Deploy Cryptocoin 
+ 
+on: 
+  push: 
+    branches: 
+      - main 
+  workflow_dispatch: 
+ 
+jobs: 
+  build-and-deploy: 
+    runs-on: ubuntu-latest 
+ 
+    steps: 
+      - name: Checkout repository 
+        uses: actions/checkout@v3 
+ 
+      - name: Set up Node.js 
+        uses: actions/setup-node@v3 
+        with: 
+          node-version: '18' 
+ 
+      - name: Install dependencies 
+        run: npm install 
+        working-directory: . 
+ 
+      - name: Compile contracts 
+        run: npx hardhat compile 
+        working-directory: . 
+ 
+      - name: Run unit tests 
+        run: npm test 
+        working-directory: . 
+ 
+      - name: Lint and format checks 
+        run: npm run lint 
+        working-directory: . 
+ 
+      - name: Deploy to RSK 
+        env: 
+          PRIVATE_KEY: ${{ secrets.RSK_PRIVATE_KEY }} 
+          RPC_URL: ${{ secrets.RSK_RPC_URL }} 
+        run: npx hardhat run scripts/deploy.js --network rsk 
+        working-directory: . 
+ 
+      - name: Backup ABI and Bytecode 
+        run: | 
+          mkdir -p backup 
+          cp artifacts/contracts/**/*.json backup/ 
+        working-directory: . 
+ 
+      - name: Upload ABI to GitHub Release 
+        uses: actions/upload-artifact@v2 
+        with: 
+          name: abi-bytecode-backup 
+          path: backup/ 
