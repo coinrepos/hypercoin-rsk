@@ -1,0 +1,82 @@
+{
+  "project": "HyperCoin Ecosystem",
+  "founder": "Marie Nancarrow",
+  "assets": ["HyperCoin", "KitCoin", "LuckyCoin", "LotteryCoin"],
+  "governance": {
+    "DAO": true,
+    "validators": "global distributed, with fallback logic",
+    "profit_validators": "permanently owned by founder"
+  },
+  "wallets": {
+    "rewards_wallet": "connected",
+    "earnings_distribution": "enabled, manual opt-out of USD",
+    "fallback": true
+  },
+  "dapps": {
+    "curacaocasino.online": {
+      "status": "to be deployed live",
+      "games": "SlotGen-powered, NFT-ready",
+      "liquidity_pool": "HYPE + FIAT accepted",
+      "cashout": "user selectable",
+      "kit": "ADA assist on site"
+    },
+    "nationalkits.com": {
+      "status": "requires repair, POD + Stripe synced",
+      "kitcoin": "linked as investor dividend token",
+      "fanFulfillment": "connected via manufacturer API",
+      "sponsorship": "primary sponsor for HoloNet boxing"
+    },
+    "holonet.digital": {
+      "status": "pre-live",
+      "apps": ["room share", "scene generation", "ADA holo-agent"],
+      "avatars": "Wardrobe API enabled",
+      "walletSupport": true
+    }
+  },
+  "AI_agents": {
+    "ADA": {
+      "role": "user broker, trade recommender, holo-assistant",
+      "voice": "ultra blue freq fallback",
+      "face": "on if user is alone",
+      "spending_logic": "profit-oriented, DAO-aware"
+    },
+    "DADA": {
+      "role": "intel/news feed to ADA/DAO",
+      "feeds": ["geopolitics", "catastrophes", "regional data"],
+      "autonomy": true
+    }
+  },
+  "insurance": {
+    "silos": ["SDSIS", "BIDIS", "CDRIS"],
+    "LifeShield": {
+      "mandatory_with_loan": true,
+      "stake_into_pool": true
+    }
+  },
+  "order_protocols": {
+    "Order66": "DAO-only, confidential",
+    "Order65": "child protection stealth monitor"
+  },
+  "tokens": {
+    "intax": {
+      "source": "spending royalty",
+      "stake_option": true,
+      "auto_DAO_investment": true
+    }
+  },
+  "dashboards": {
+    "hypercoin": "includes live metrics, pools, DAO proposals",
+    "casino": "earn/spend dashboard + slot tracker",
+    "investor": "tokenomics + onboarding material",
+    "kitsponsor": "SlickKit branding, Printful injection"
+  },
+  "infrastructure": {
+    "siteground_access": true,
+    "emails": {
+      "admin@curacaocasino.online": "live",
+      "support@": "auto-responder with smart tagging"
+    },
+    "payment_api": "Stripe (linked)",
+    "manufacturer_payment": "enabled with conditional fiat TX"
+  }
+}
