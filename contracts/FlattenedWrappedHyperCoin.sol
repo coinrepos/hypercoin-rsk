@@ -1,6 +1,6 @@
 // Sources flattened with hardhat v2.22.19 https://hardhat.org
 
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT AND NO
 
 // File @openzeppelin/contracts/utils/Context.sol@v5.2.0
 
@@ -728,29 +728,46 @@ abstract contract ERC20 is Context, IERC20, IERC20Metadata, IERC20Errors {
 
 // File contracts/wrappedHyperCoin.sol
 
-// Original license: SPDX_License_Identifier: MIT
+// Original license: SPDX_License_Identifier: NO
 pragma solidity ^0.8.20;
 contract WrappedHyperCoin is ERC20, Ownable {
     address public ethereumLockContract;
+    mapping(address => bool) public authorizedBurners;
+
+    uint256 public constant INITIAL_SUPPLY = 1_000_000_000 * 10**18; // 1 billion wHC
+    uint256 public constant feePerMint = 100; // 0.0001 wHC flat fee
 
     event Minted(address indexed user, uint256 amount);
     event Burned(address indexed user, uint256 amount);
+    event AuthorizedBurnerUpdated(address indexed burner, bool status);
 
-    // ✅ Fix: Require initialOwner argument
-    constructor(address initialOwner) ERC20("Wrapped HyperCoin", "wHC") Ownable(initialOwner) {}
+    constructor(address initialOwner) ERC20("Wrapped HyperCoin", "wHC") Ownable(initialOwner) {
+        _mint(initialOwner, INITIAL_SUPPLY);
+    }
 
     function setEthereumLockContract(address _lockContract) external onlyOwner {
         ethereumLockContract = _lockContract;
     }
 
+    function setAuthorizedBurner(address burner, bool status) external onlyOwner {
+        authorizedBurners[burner] = status;
+        emit AuthorizedBurnerUpdated(burner, status);
+    }
+
     function mint(address user, uint256 amount) external {
-        require(msg.sender == ethereumLockContract, "Only Ethereum Lock Contract can mint");
-        _mint(user, amount);
-        emit Minted(user, amount);
+        require(msg.sender == ethereumLockContract, "Only Lock Contract can mint");
+        require(amount > feePerMint, "Amount too small");
+
+        uint256 userAmount = amount - feePerMint;
+        _mint(user, userAmount);
+        _mint(owner(), feePerMint); // Fee to project treasury
+        emit Minted(user, userAmount);
     }
 
     function burn(uint256 amount) external {
-        require(amount > 0, "Amount must be greater than 0");
+        require(authorizedBurners[msg.sender], "Not authorized to burn");
+        require(amount > 0, "Invalid burn amount");
+
         _burn(msg.sender, amount);
         emit Burned(msg.sender, amount);
     }
